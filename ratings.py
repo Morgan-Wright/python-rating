@@ -1,30 +1,36 @@
-print("Welcome to the restaurant rating lister.")
+"""Restaurant rating lister."""
 
-movies = {"Florean Fortescue's Ice Cream Parlour": '4',
-          "Jellied Eel Shop": '3',
-          "The Tavern": '3',
-          "Luchino Caffe": '1',
-          "The Porcupine": '5',
-          "Diagon Alley cafe": '2',
-          "The Bear & Staff": '2',
-          "Ministry Munchies": '1',
-          "Chip Shop": '3',
-          "Eternelle's Elixir of Refreshment": '5',
-          "Big Bean Shack": '3',
-          "The Club": '2'
-          }
+def process_scores():
+    """Read scores file and return dictionary of {restaurant-name: score}."""
 
-def sorted_list(movies):
-    for key, value in sorted(movies.items()):
-        print(key, value)
+    scores_txt = open('scores.txt')
 
-sorted_list(movies)   
-restaurant = input("Please select a restaurant from the list.\n")
-rating = input(f"Please give {restaurant} a star rating out of 5.\n")
+    scores = {}
 
-# movies.update(restaurant = rating)
+    for line in scores_txt:
+        line = line.rstrip()
+        restaurant, score = line.split(":")
+        scores[restaurant] = int(score)
 
-if restaurant in movies.keys():
-    movies.update()
+    return scores
 
-print(sorted_list(movies))
+def add_restaurant(scores):
+    """Add a restaurant and rating."""
+
+    print("Please add a rating for your favorite restaurant!")
+    restaurant = input("Restaurant name> ")
+    rating = int(input("Rating> "))
+
+    scores[restaurant] = rating
+
+def print_sorted_scores(scores):
+    """Print restaurants and ratings, sorted."""
+
+    for restaurant, rating in sorted(scores.items()):
+        print(f"{restaurant} is rated at {rating}.")
+
+scores = process_scores()
+
+add_restaurant(scores)
+
+print_sorted_scores(scores)
